@@ -1,13 +1,13 @@
 <template>
     <div>
-        <van-nav-bar title="用户注册" left-text="返回" left-arrow @click-left="goBack" />
+        <van-nav-bar title="用户登录" left-text="返回" left-arrow @click-left="goBack" />
 
         <div class="register-panel">
             <van-field v-model="userName" :error-message="usernameErrorMsg" label="用户名" icon="clear" placeholder="请输入用户名" required @click-icon="userName = ''" />
 
             <van-field v-model="password" :error-message="passwordErrorMsg" type="password" label="密码" placeholder="请输入密码" required />
             <div class="register-button">
-                <van-button type="primary" size="large" @click="registerAction" :loading="openLoading">马上注册</van-button>
+                <van-button type="primary" size="large" @click="LoginAction" :loading="openLoading">登录</van-button>
             </div>
         </div>
 
@@ -31,10 +31,10 @@ export default {
         goBack() {
             this.$router.go(-1);
         },
-        axiosRegisterUser() {
+        axiosLoginUser() {
             this.openLoading = true;
             axios({
-                url: url.registerUser,
+                url: url.login,
                 method: 'POST',
                 data: {
                     userName: this.userName,
@@ -44,17 +44,16 @@ export default {
                 .then(response => {
                     console.log(response);
                     if (response.data.code === 200) {
-                        this.Toast.success('注册成功');
+                        this.Toast.success('登录成功');
                         this.openLoading = false;
                     } else {
-                        console.log(response.data.mesage);
-                        this.Toast.fail('注册失败');
+                        this.Toast.fail(response.data.message);
                         this.openLoading = false;
                     }
                 })
                 .catch(error => {
                     console.log(error);
-                    this.Toast.fail('注册失败');
+                    this.Toast.fail('登录失败');
                     this.openLoading = false;
                 });
         },
@@ -74,9 +73,9 @@ export default {
             }
             return isOk;
         },
-        registerAction() {
+        LoginAction() {
             if (this.checkForm()) {
-                this.axiosRegisterUser();
+                this.axiosLoginUser();
             }
         }
     }

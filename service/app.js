@@ -2,6 +2,7 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 let user = require('./appApi/user.js');
+let goods = require('./appApi/goods');
 const app = new Koa();
 const cors = require('koa2-cors');
 const mongoose = require('mongoose');
@@ -9,6 +10,7 @@ const { connect, initSchemas } = require('./database/init.js');
 
 let router = new Router();
 router.use('/user', user.routes());
+router.use('/goods', goods.routes());
 app.use(bodyParser());
 app.use(cors());
 app.use(router.routes());

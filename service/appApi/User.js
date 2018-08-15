@@ -49,7 +49,11 @@ router.post('/login', async ctx => {
           .comparePassword(password, result.password)
           .then(isMatch => {
             //返回比对结果
-            ctx.body = { code: 200, message: isMatch };
+            if (isMatch) {
+              ctx.body = { code: 200, message: isMatch };
+            } else {
+              ctx.body = { code: 500, message: '密码错误' };
+            }
           })
           .catch(error => {
             //出现异常，返回异常

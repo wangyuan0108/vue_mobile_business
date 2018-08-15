@@ -27,6 +27,13 @@ export default {
             passwordErrorMsg: ''
         };
     },
+    created() {
+        if (localStorage.userInfo) {
+            this.Toast.success('您已经登录');
+            this.$router.push('/');
+        }
+    },
+
     methods: {
         goBack() {
             this.$router.go(-1);
@@ -44,8 +51,23 @@ export default {
                 .then(response => {
                     console.log(response);
                     if (response.data.code === 200) {
-                        this.Toast.success('登录成功');
-                        this.openLoading = false;
+                        // this.Toast.success('登录成功');
+                        // this.$router.push('/');
+                        // this.openLoading = false;
+                        new Promise((resolve, reject) => {
+                            localStorage.userInfo = JSON.stringify({ userName: this.userName });
+                            setTimeout(() => {
+                                resolve();
+                            }, 500);
+                        })
+                            .then(() => {
+                                this.Toast.success('登录成功');
+                                this.$router.push('/');
+                            })
+                            .catch(err => {
+                                this.Toast.fail('登录状态保存失败');
+                                console.log(err);
+                            });
                     } else {
                         this.Toast.fail(response.data.message);
                         this.openLoading = false;

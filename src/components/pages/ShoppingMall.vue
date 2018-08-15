@@ -71,9 +71,10 @@
 </template>
 <script>
 import axios from 'axios';
+import url from '@/serviceAPI.config.js';
 import { toMoney } from '@/filter/moneyFilter.js';
-import floorComponent from './component/floorComponent';
-import goodsInfo from './component/goodsInfoComponent';
+import floorComponent from '../component/floorComponent';
+import goodsInfo from '../component/goodsInfoComponent';
 export default {
     data() {
         return {
@@ -102,7 +103,7 @@ export default {
         }
     },
     created() {
-        axios({ url: 'https://www.easy-mock.com/mock/5b71578f870492755436c111/api/index', method: 'get' })
+        axios({ url: url.getShoppingMallInfo, method: 'get' })
             .then(response => {
                 if (response.status === 200) {
                     this.category = response.data.data.category;

@@ -5,6 +5,7 @@ const db = 'mongodb://localhost:27017/smile-db';
 exports.initSchemas = () => {
   glob.sync(resolve(__dirname, './schema/', '**/*.js')).forEach(require);
 };
+
 exports.connect = () => {
   //连接数据库
   mongoose.connect(db);

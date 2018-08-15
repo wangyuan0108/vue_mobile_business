@@ -18,7 +18,7 @@ app.use(async ctx => {
 });
 (async () => {
   await connect();
-  // initSchemas();
+  initSchemas();
   // const User = mongoose.model('User');
   // let oneUser = new User({ userName: 'jspang', password: '123456' });
   // oneUser.save().then(() => {
@@ -26,4 +26,4 @@ app.use(async ctx => {
   // });
 })();
 app.listen(3001);
-console.log('[demo] start-quick is starting at port 3000');
+console.log('[demo] start-quick is starting at port 3001');

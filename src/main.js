@@ -6,7 +6,7 @@ import router from './router';
 import loading from './assets/images/loading.png';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
-import { Button, Row, Col, Swipe, SwipeItem, Lazyload, List, Field, NavBar, Toast } from 'vant';
+import { Button, Row, Col, Swipe, SwipeItem, Lazyload, List, Field, NavBar, Toast, Tab, Tabs } from 'vant';
 Vue.use(Button)
   .use(Row)
   .use(Col)
@@ -15,7 +15,9 @@ Vue.use(Button)
   .use(Lazyload, { loading })
   .use(List)
   .use(Field)
-  .use(NavBar);
+  .use(NavBar)
+  .use(Tabs)
+  .use(Tab);
 Vue.prototype.Toast = Toast;
 Vue.use(VueAwesomeSwiper /* { default global options } */);
 Vue.config.productionTip = false;

@@ -59,7 +59,7 @@ export default {
             page: 1, // 商品列表的页数
             goodList: [], // 商品信息
             categorySubId: '', // 商品子分类ID
-            errorImg: 'this.src="' + require('@/assets/images/errorimg.png') + '"' //错误图片显示路径
+            errorImg: 'this.src="' + require('@/assets/images/errorimg.png') + '"' // 错误图片显示路径
         };
     },
     created() {

@@ -6,15 +6,28 @@ import Login from '@/components/pages/Login';
 import Goods from '@/components/pages/Goods';
 import CategoryList from '@/components/pages/CategoryList';
 import Cart from '@/components/pages/Cart';
-
+import Main from '@/components/pages/Main';
 Vue.use(Router);
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'ShoppingMall',
-      component: ShoppingMall
+      redirect: '/main'
+    },
+    {
+      path: '/main',
+      name: 'Main',
+      component: Main,
+      children: [
+        { path: '/', name: 'ShoppingMall', component: ShoppingMall },
+        {
+          path: '/category-list',
+          name: 'CategoryList',
+          component: CategoryList
+        },
+        { path: '/Cart', name: 'Cart', component: Cart }
+      ]
     },
     {
       path: '/register',
@@ -30,16 +43,6 @@ export default new Router({
       path: '/goods/:goodsId',
       name: 'Goods',
       component: Goods
-    },
-    {
-      path: '/category-list',
-      name: 'CategoryList',
-      component: CategoryList
-    },
-    {
-      path: '/cart',
-      name: 'Cart',
-      component: Cart
     }
   ]
 });

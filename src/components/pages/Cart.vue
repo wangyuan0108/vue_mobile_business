@@ -48,6 +48,7 @@ export default {
     },
     created() {
         this.getCartInfo();
+        this.changeTabBarActive();
     },
     filters: {
         moneyFilter(money) {
@@ -82,6 +83,12 @@ export default {
         clearCart() {
             localStorage.removeItem('cartInfo');
             this.cartInfo = [];
+        },
+        changeTabBarActive() {
+            this.nowPath = this.$route.path;
+            if (this.nowPath === '/Cart') {
+                this.active = 2;
+            }
         }
     }
 };

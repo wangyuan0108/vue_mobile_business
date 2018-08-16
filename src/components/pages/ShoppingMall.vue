@@ -22,7 +22,7 @@
             </van-swipe>
         </div>
         <div class="type-bar">
-            <div v-for="(cate,index) in category" :key="index">
+            <div class="type-item" v-for="(cate,index) in category" :key="index">
                 <img v-lazy="cate.image" width="90%" />
                 <span>{{cate.mallCategoryName}}</span>
             </div>
@@ -237,5 +237,8 @@ img[lazy='loading'] {
     font-size: 14px;
     height: 1.8rem;
     line-height: 1.8rem;
+}
+.type-item {
+    flex: 1;
 }
 </style>

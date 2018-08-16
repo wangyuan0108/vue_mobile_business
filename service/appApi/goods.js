@@ -28,7 +28,27 @@ router.get('/insertAllGoodsInfo', async ctx => {
   });
   ctx.body = '开始导入数据';
 });
-
+router.get('/insertAllCategory', async ctx => {
+  fs.readFile('./data_json/category.json', 'utf8', (err, data) => {
+    data = JSON.parse(data);
+    let saveCount = 0;
+    const Category = mongoose.model('Category');
+    data.RECORDS.map((value, index) => {
+      console.log(value);
+      let newCategory = new Category(value);
+      newCategory
+        .save()
+        .then(() => {
+          saveCount++;
+          console.log('插入成功:' + saveCount);
+        })
+        .catch(error => {
+          console.log('插入失败:' + error);
+        });
+    });
+  });
+  ctx.body = '开始导入数据.....';
+});
 router.get('/insertAllCategorySub', async ctx => {
   fs.readFile('./data_json/category_sub.json', 'utf8', (err, data) => {
     data = JSON.parse(data);
@@ -73,10 +93,10 @@ router.get('/getCategoryList', async ctx => {
     ctx.body = { code: 500, message: err };
   }
 });
-router.get('/getCategorySubList', async ctx => {
+router.post('/getCategorySubList', async ctx => {
   try {
-    //let categoryId = ctx.request.body.categoryId
-    let categoryId = 1;
+    let categoryId = ctx.request.body.categoryId;
+    // let categoryId = 1;
     const CategorySub = mongoose.model('CategorySub');
     let result = await CategorySub.find({ MALL_CATEGORY_ID: categoryId }).exec();
     ctx.body = { code: 200, message: result };
@@ -84,12 +104,18 @@ router.get('/getCategorySubList', async ctx => {
     ctx.body = { code: 500, message: err };
   }
 });
-router.get('/getGoodsListByCategorySubID', async ctx => {
+router.post('/getGoodsListByCategorySubID', async ctx => {
   try {
-    //let categorySubId = ctx.request.body.categoryId
-    let categorySubId = '2c9f6c946016ea9b016016f79c8e0000';
+    let categorySubId = ctx.request.body.categorySubId;
+    // let categorySubId = '2c9f6c946016ea9b016016f79c8e0000';
+    let page = ctx.request.body.page;
+    let num = 10;
+    let start = (page - 1) * num;
     const Goods = mongoose.model('Goods');
-    let result = await Goods.find({ SUB_ID: categorySubId }).exec();
+    let result = await Goods.find({ SUB_ID: categorySubId })
+      .skip(start)
+      .limit(num)
+      .exec();
     ctx.body = { code: 200, message: result };
   } catch (err) {
     ctx.body = { code: 500, message: err };
